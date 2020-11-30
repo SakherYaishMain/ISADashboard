@@ -23,7 +23,7 @@
 </div>';
       }
      ?>
-    <div class="content d-flex justify-content-center align-items-center content-login" style="height:100vh;">
+    <div class="content d-flex justify-content-center align-items-center content-login" style="height:calc(100vh - 30px);">
       <div class="login-box d-flex">
         <div class="left-side-login" style="width:50%;">
           <h2 style="font-weight:600;text-align:center;margin-top:70px;">Please Login</h2>
@@ -43,5 +43,6 @@
         </div>
       </div>
     </div>
+    <?php require_once"footer.php" ?>
   </body>
 </html>

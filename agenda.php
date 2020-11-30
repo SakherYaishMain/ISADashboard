@@ -42,8 +42,8 @@ session_start();
         <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">AGENDA</h2>
 
         <div class="center-content flex-wrap justify-content-center" style="width:90%;margin:0px auto;padding-top:50px;">
-            <button onclick="displayagendaeditor()" style="margin-bottom:30px;padding:5px;color:white;background:#2b2f49;width:150px;height:45px;border-radius:5px;border:none;">Add new Agenda</button>
-            <div class="addtextarea" style="width: 100%;height:500px;display:none !important;;">
+            <button onclick="displayagendaeditor()" style=";margin-bottom:30px;padding:5px;color:white;background:#2b2f49;width:150px;height:45px;border-radius:5px;border:none;">Add new Agenda</button>
+            <div class="addtextarea" style="width: 100%;height:500px;display:none">
                 <textarea style="height:90%;">
 
   </textarea>
@@ -54,18 +54,19 @@ session_start();
 
 
 
-            <div class="tableagenda">
+            <div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);">
                 <table class="table table-striped" style="overflow: auto">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Date</th>
                         <th scope="col">Agenda</th>
+                        <th scope="col">Submitted By</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $sql = "SELECT * FROM agenda ORDER BY entryID ASC;";
+                    $sql = "SELECT * FROM agenda ORDER BY entryID DESC;";
                     $stmt = mysqli_stmt_init($link);
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Statement Failed";
@@ -79,6 +80,7 @@ session_start();
                                     <th scope='row'>".htmlspecialchars($row['entryID'])."</th>
                                     <td>".$row['datetimeval']."</td>
                                     <td>".$row['message']."</td>
+                                    <td>".$row['Submittedby']."</td>
                                 </tr>
                             ";
 
@@ -108,8 +110,10 @@ session_start();
 </div>
 <script>
     function displayagendaeditor(){
-        document.getElementsByClassName("addtextarea")[0].style.display="block";
-        document.getElementsByClassName("inputagenda")[0].style.display="block";
+
+            document.getElementsByClassName("addtextarea")[0].style.display="block";
+            document.getElementsByClassName("inputagenda")[0].style.display="block";
+
 
     }
 </script>
@@ -142,6 +146,6 @@ session_start();
         }
     }
 </script>
-
+<?php require_once"footer.php" ?>
 </body>
 </html>

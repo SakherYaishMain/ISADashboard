@@ -77,7 +77,7 @@ session_start();
              ?></p>
 
           </div>
-          <div id='calendar'>
+          <div id='calendar' style="margin-bottom:50px;">
           </div>
           <div class="announcements-overview">
             <h2 style="font-weight:600;margin-left:30px;margin-top:20px;border-bottom:3px solid black;padding-bottom:10px;width:360px;">Latest announcements</h2>
@@ -101,6 +101,7 @@ session_start();
           </div>
         </div>
       </div>
+
     </div>
     <script type="text/javascript">
     var omak = document.getElementsByClassName('left-side-taskbar');
@@ -196,5 +197,6 @@ session_start();
 });
 
     </script>
+    <?php require_once"footer.php" ?>
   </body>
 </html>

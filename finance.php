@@ -234,6 +234,6 @@ session_start();
         }
     }
 </script>
-
+<?php require_once"footer.php" ?>
 </body>
 </html>

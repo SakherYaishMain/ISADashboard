@@ -393,7 +393,7 @@ body{
   .login-box{
     display:block !important;
     width: 100%;
-    height:100vh;
+    height:calc(100vh - 30px);
     box-shadow:none !important;
   }
   .left-side-login, .right-side-login{
