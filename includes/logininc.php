@@ -105,11 +105,54 @@ if (isset($_POST['login_user'])) {
         $_SESSION['position'] = $row['position'];
         $_SESSION['email'] = $row['email'];
         $_SESSION['userid'] = $row['userID'];
-        header("location:../home.php");
+        $_SESSION['clearance'] = $row['clearance'];
+        if($row['pswdstatus'] == "needed"){
+          header("location:../passwordchange.php");
+        }
+        elseif ($row['pswdstatus'] == "changed"){
+          header("location:../home.php");
+        }
     	}else {
         header('location: ../index.php?error=wrong');
     	}
 
   }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////CHANGE PSWD///////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+if (isset($_POST['change_pswd'])) {
+
+  $pswd = $_POST['pswd'];
+  $confirmpswd = $_POST['confirm_pswd'];
+  $userid = $_SESSION['userid'];
+
+  echo $pswd;
+  echo $confirmpswd;
+
+  if($pswd == $confirmpswd) {
+    $sql = "UPDATE users SET password = ?, pswdstatus = ? WHERE userID = ?;";
+    $pswdstatus = "changed";
+    $stmt = mysqli_stmt_init($link);
+    $finalpswd = md5($pswd);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      echo "SQL Error";
+    } else {
+      mysqli_stmt_bind_param($stmt, "ssi", $finalpswd, $pswdstatus, $userid);
+      mysqli_stmt_execute($stmt);
+      $result = mysqli_stmt_get_result($stmt);
+      header("location:../home.php");
+
+
+    }
+
+  }
+  else{
+    header("location:../passwordchange.php?error");
+  }
+}
+
+
  ?>

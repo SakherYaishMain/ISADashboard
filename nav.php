@@ -14,9 +14,22 @@ if (!isset($_SESSION['username'])) {
 
     <ul class="taskbar">
         <a href="home.php"><li><i class="fas fa-columns" style="margin-right:20px;"></i>Dashboard</li></a>
-        <a href="announcements.php"><li><i class="fas fa-bullhorn" style="margin-right:20px;"></i>Announcements</li></a>
-        <a href="notes.php"><li><i class="far fa-clipboard" style="margin-right:20px;"></i>Meeting Notes</li></a>
-        <a href="finance.php"><li><i class="fas fa-landmark" style="margin-right:20px;"></i>Finances</li></a>
+        <?php
+            if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] == "2S" OR $_SESSION['clearance'] == "2T" OR $_SESSION['clearance'] == "2SM"){
+                echo '<a href="announcements.php"><li><i class="fas fa-bullhorn" style="margin-right:20px;"></i>Announcements</li></a>';
+            }
+        ?>
+        <?php
+        if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] == "2S"){
+            echo '<a href="notes.php"><li><i class="far fa-clipboard" style="margin-right:20px;"></i>Meeting Notes</li></a>';
+        }
+        ?>
+        <?php
+            if($_SESSION['clearance'] > 1) {
+                echo '<a href="finance.php"><li><i class="fas fa-landmark" style="margin-right:20px;"></i>Finances</li></a>';
+            }
+        ?>
+
         <a href=""><li><i class="fas fa-list-ul" style="margin-right:20px;"></i>To do list</li></a>
         <a href="agenda.php"><li><i class="far fa-calendar-check" style="margin-right:20px;"></i>Agenda</li></a>
     </ul>

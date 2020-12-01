@@ -1,3 +1,17 @@
+<?php
+session_set_cookie_params('o', '/', 'localhost/ISAdashboard', isset($_SERVER["HTTPS"]), true);
+require_once "./connections/connect.php";
+session_start();
+
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['username']);
+    //header("location: login.php");
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -14,13 +28,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Enriqueta:wght@700&display=swap" rel="stylesheet">
 </head>
-  <body style="background:#dfdde0;font-family: 'Enriqueta', serif;">
+  <body style="background-image: url('./images/abstractbackground.png');font-family: 'Enriqueta', serif;">
+  <style>
+      .left-footer{
+          width:0px !important;
+          height:0px !important;
+      }
+  </style>
     <?php
-      if(isset($_REQUEST['error'])){
-        echo '<div class="alert alert-danger alert-dismissible" style="text-align:center;">
+      if(isset($_REQUEST['error'])) {
+          if ($_REQUEST['error'] == "wrong") {
+              echo '<div class="alert alert-danger alert-dismissible" style="text-align:center;">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>Wrong Username/Password</strong>
 </div>';
+          }
+          if($_REQUEST['error'] == "forgot"){
+              echo '<div class="alert alert-danger alert-dismissible" style="text-align:center;">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Contact Website Administrator</strong>
+</div>';
+          }
       }
      ?>
     <div class="content d-flex justify-content-center align-items-center content-login" style="height:calc(100vh - 30px);">
@@ -32,7 +60,7 @@
             <input type="text" name="username" value="" placeholder="Username"><br><br>
             <label for="password">Password</label><br>
             <input type="password" name="password" value="" placeholder="Password"><br><br>
-            <a href="index.php">Forgot your password?</a>
+            <a href="index.php?error=forgot">Forgot your password?</a>
             <input type="submit" name="login_user" value="Login" style="margin-top:60px; background:#085646;border:none;color:white;border-radius:10px;">
           </form>
         </div>

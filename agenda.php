@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params('o', '/', 'localhost/ISAdashboard', isset($_SERVER["HTTPS"]), true);
 require_once "./connections/connect.php";
 session_start();
 ?>
@@ -42,19 +43,32 @@ session_start();
         <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">AGENDA</h2>
 
         <div class="center-content flex-wrap justify-content-center" style="width:90%;margin:0px auto;padding-top:50px;">
-            <button onclick="displayagendaeditor()" style=";margin-bottom:30px;padding:5px;color:white;background:#2b2f49;width:150px;height:45px;border-radius:5px;border:none;">Add new Agenda</button>
-            <div class="addtextarea" style="width: 100%;height:500px;display:none">
+            <?php
+                if($_SESSION['clearance'] > 2){
+                    echo '<button onclick="displayagendaeditor()" style=";margin-bottom:30px;padding:5px;color:white;background:#2b2f49;width:150px;height:45px;border-radius:5px;border:none;">Add new Agenda</button>';
+                }
+            ?>
+            <?php
+            if($_SESSION['clearance'] > 2){
+                echo '<div class="addtextarea" style="width: 100%;height:500px;display:none">
                 <textarea style="height:90%;">
 
   </textarea>
-            </div>
-                <div class="inputagenda d-flex justify-content-center" style="margin-bottom:20px;display:none !important;margin-top:30px;">
+            </div>';
+            }
+            ?>
+            <?php
+            if($_SESSION['clearance'] > 2){
+                echo '<div class="inputagenda d-flex justify-content-center" style="margin-bottom:20px;display:none !important;margin-top:30px;">
                     <input type="submit" id="agendasender" onclick="sendagenda();" style="width:150px;height:40px;background:#2b2f49;color:white;border:none;border-radius:5px;">
-                </div>
+                </div>';
+            }
+            ?>
 
 
 
-            <div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);">
+
+            <div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
                 <table class="table table-striped" style="overflow: auto">
                     <thead>
                     <tr>

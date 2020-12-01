@@ -37,7 +37,7 @@ session_start();
                 <label for="name">Position</label><br>
                 <input type="text" name="position" value="<?php echo $_SESSION['position'] ?>" disabled><br><br>
                 <label for="name">Clearance Level</label><br>
-                <input type="text" name="clevel" value="1" disabled><br><br>
+                <input type="text" name="clevel" value="<?php echo $_SESSION['clearance'];?>" disabled><br><br>
                 <label for="name">Email</label><br>
                 <input type="text" class="changeinfo" name="email" value="<?php echo $_SESSION['email']; ?>" disabled><br><br>
                 <button type="button" name="button" id='editinfo' onclick="updateinfo()" style="background:#2b2f49;color:white;width:150px;height:40px;border:none;border-radius:5px;">Edit</button>
@@ -85,6 +85,6 @@ session_start();
       }
     }
     </script>
-
+    <?php require_once"footer.php" ?>
   </body>
 </html>
