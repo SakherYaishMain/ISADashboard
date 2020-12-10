@@ -1,7 +1,8 @@
 <?php
-session_set_cookie_params('o', '/', 'localhost/ISAdashboard', isset($_SERVER["HTTPS"]), true);
+session_set_cookie_params('o', '/', 'https://isadashboard.000webhostapp.com/', isset($_SERVER["HTTPS"]), true);
 require_once "./connections/connect.php";
 session_start();
+require_once './htmlpurifier/library/HTMLPurifier.auto.php';
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +22,14 @@ session_start();
     <link href="https://fonts.googleapis.com/css2?family=Enriqueta:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5,npm/fullcalendar@5/locales-all.min.js,npm/fullcalendar@5/locales-all.min.js,npm/fullcalendar@5/main.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5/main.min.css,npm/fullcalendar@5/main.min.css">
-    <script src="https://cdn.tiny.cloud/1/043se626midy76fieoyc7k0gnwwdwiduc90o2xsq2iu881ps/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <!--<script src="https://cdn.tiny.cloud/1/043se626midy76fieoyc7k0gnwwdwiduc90o2xsq2iu881ps/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2/dist/editor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
+    <link href="https://cdn.quilljs.com/1.3.4/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.4/quill.js"></script>
+
+
 
 </head>
 <body style="background:#fafcfe;">
@@ -35,6 +43,12 @@ session_start();
     .tox-tinymce{
         height:100% !important;
     }
+    .ql-toolbar{
+        display:none;
+    }
+    .ql-editor li{
+        padding-left:0px !important;
+    }
 </style>
 <div class="content d-flex">
     <?php require"nav.php";?>
@@ -44,16 +58,14 @@ session_start();
 
         <div class="center-content flex-wrap justify-content-center" style="width:90%;margin:0px auto;padding-top:50px;">
             <?php
-                if($_SESSION['clearance'] > 2){
-                    echo '<button onclick="displayagendaeditor()" style=";margin-bottom:30px;padding:5px;color:white;background:#2b2f49;width:150px;height:45px;border-radius:5px;border:none;">Add new Agenda</button>';
-                }
+            if($_SESSION['clearance'] > 2){
+                echo '<button onclick="displayagendaeditor()" style=";margin-bottom:30px;padding:5px;color:white;background:#2b2f49;width:150px;height:45px;border-radius:5px;border:none;">Add new Agenda</button>';
+            }
             ?>
             <?php
             if($_SESSION['clearance'] > 2){
-                echo '<div class="addtextarea" style="width: 100%;height:500px;display:none">
-                <textarea style="height:90%;">
-
-  </textarea>
+                echo '<div id="editor" STYLE="display:none;padding-top:5px;height:300px;padding-right:10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin:0px auto;">
+                <div id="toolbar"></div>
             </div>';
             }
             ?>
@@ -82,6 +94,9 @@ session_start();
                     <?php
                     $sql = "SELECT * FROM agenda ORDER BY entryID DESC;";
                     $stmt = mysqli_stmt_init($link);
+                    $config = HTMLPurifier_Config::createDefault();
+                    $purifier = new HTMLPurifier($config);
+
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Statement Failed";
                     }else{
@@ -89,12 +104,13 @@ session_start();
                         $result = mysqli_stmt_get_result($stmt);
 
                         while($row = mysqli_fetch_array($result)){
+                            $clean_html = $purifier->purify($row['message']);
                             echo "
                                <tr>
                                     <th scope='row'>".htmlspecialchars($row['entryID'])."</th>
-                                    <td>".$row['datetimeval']."</td>
+                                    <td>".htmlspecialchars($row['datetimeval'])."</td>
                                     <td>".$row['message']."</td>
-                                    <td>".$row['Submittedby']."</td>
+                                    <td>".htmlspecialchars($row['Submittedby'])."</td>
                                 </tr>
                             ";
 
@@ -107,38 +123,37 @@ session_start();
             </div>
 
 
-            <script>
-                tinymce.init({
-                    selector: 'textarea',
-                    plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-                    toolbar: 'a11ycheck addcomment showcomments casechange checklist bullist code formatpainter pageembed permanentpen table',
-                    toolbar_mode: 'floating',
-                    tinycomments_mode: 'embedded',
-                    tinycomments_author: 'Author name',
-                });
-            </script>
+
 
 
         </div>
     </div>
 </div>
+
+
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+</script>
 <script>
     function displayagendaeditor(){
 
-            document.getElementsByClassName("addtextarea")[0].style.display="block";
-            document.getElementsByClassName("inputagenda")[0].style.display="block";
-
+        document.getElementById("editor").style.display="block";
+        document.getElementsByClassName("inputagenda")[0].style.display="block";
+        document.getElementsByClassName("ql-toolbar")[0].style.display="block";
 
     }
 </script>
 <script>
     function sendagenda(){
-        var yes = document.getElementById("mce_0_ifr");
-        var elmnt = yes.contentWindow.document.getElementsByTagName("body")[0];
-        var elmntinner = elmnt.innerHTML;
+        var yes = document.getElementsByClassName("ql-editor")[0];
+        //var elmnt = yes.contentWindow.document.getElementsByTagName("body")[0];
+        //var elmntinner = elmnt.innerHTML;
+        var yesinner = yes.innerHTML;
         //var bodymessage = document.getElementsByClassName("mce-content-body")[0];
-        console.log(elmnt);
-        $.post( "./includes/agendainc.php", { agendamessage: elmntinner})
+        //console.log(elmnt);
+        $.post( "./includes/agendainc.php", { agendamessage: yesinner})
             .done(function( data ) {
 
             });

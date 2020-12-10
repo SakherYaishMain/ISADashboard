@@ -18,8 +18,8 @@ if (isset($_POST['reg_user'])) {
 
 
   if ($password_1 != $password_2) {
-  array_push($errors, "Password is required");
-  header('location: ../signup.php?error=passwordsdontmatch');
+    array_push($errors, "Password is required");
+    header('location: ../signup.php?error=passwordsdontmatch');
   }
 
   // first check the database to make sure
@@ -53,25 +53,25 @@ if (isset($_POST['reg_user'])) {
   }
 
   // Finally, register user if there are no errors in the form
- if (count($errors) == 0) {
-   $password = md5($password_1);//encrypt the password before saving in the database
+  if (count($errors) == 0) {
+    $password = md5($password_1);//encrypt the password before saving in the database
 
-   $sql = "INSERT INTO users (name, email, password)
+    $sql = "INSERT INTO users (name, email, password)
          VALUES(?, ?, ?)";
 
-   $stmt = mysqli_stmt_init($link);
-   if(!mysqli_stmt_prepare($stmt, $sql)){
-     echo "SQL Error";
-   }else{
-     mysqli_stmt_bind_param($stmt, "sss", $fullname, $email, $password);
-     mysqli_stmt_execute($stmt);
-     $_SESSION['fullname'] = $fullname;
-     $_SESSION['success'] = "You are now logged in";
-     $_SESSION['email'] = $email;
-     header('location: ../index.php');
-   }
+    $stmt = mysqli_stmt_init($link);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+      echo "SQL Error";
+    }else{
+      mysqli_stmt_bind_param($stmt, "sss", $fullname, $email, $password);
+      mysqli_stmt_execute($stmt);
+      $_SESSION['fullname'] = $fullname;
+      $_SESSION['success'] = "You are now logged in";
+      $_SESSION['email'] = $email;
+      header('location: ../index.php');
+    }
 
- }
+  }
 }
 
 
@@ -87,34 +87,34 @@ if (isset($_POST['login_user'])) {
 
 
 
-  	$password = md5($password);
-  	$sql = "SELECT * FROM users WHERE username=? AND password=?";
-    $stmt = mysqli_stmt_init($link);
+  $password = md5($password);
+  $sql = "SELECT * FROM users WHERE username=? AND password=?";
+  $stmt = mysqli_stmt_init($link);
 
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-      echo "SQL Error";
-    }else{
-      mysqli_stmt_bind_param($stmt, "ss", $username, $password);
-      mysqli_stmt_execute($stmt);
-      $result = mysqli_stmt_get_result($stmt);
-      $row = mysqli_fetch_assoc($result);
-      if (mysqli_num_rows($result) == 1) {
-    	  $_SESSION['username'] = $username;
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['pfp'] = $row['pfp'];
-        $_SESSION['position'] = $row['position'];
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['userid'] = $row['userID'];
-        $_SESSION['clearance'] = $row['clearance'];
-        if($row['pswdstatus'] == "needed"){
-          header("location:../passwordchange.php");
-        }
-        elseif ($row['pswdstatus'] == "changed"){
-          header("location:../home.php");
-        }
-    	}else {
-        header('location: ../index.php?error=wrong');
-    	}
+  if(!mysqli_stmt_prepare($stmt, $sql)){
+    echo "SQL Error";
+  }else{
+    mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result) == 1) {
+      $_SESSION['username'] = $username;
+      $_SESSION['email'] = $row['email'];
+      $_SESSION['pfp'] = $row['pfp'];
+      $_SESSION['position'] = $row['position'];
+      $_SESSION['email'] = $row['email'];
+      $_SESSION['userid'] = $row['userID'];
+      $_SESSION['clearance'] = $row['clearance'];
+      if($row['pswdstatus'] == "needed"){
+        header("location:../passwordchange.php");
+      }
+      elseif ($row['pswdstatus'] == "changed"){
+        header("location:../home.php");
+      }
+    }else {
+      header('location: ../index.php?error=wrong');
+    }
 
   }
 }
@@ -129,8 +129,7 @@ if (isset($_POST['change_pswd'])) {
   $confirmpswd = $_POST['confirm_pswd'];
   $userid = $_SESSION['userid'];
 
-  echo $pswd;
-  echo $confirmpswd;
+
 
   if($pswd == $confirmpswd) {
     $sql = "UPDATE users SET password = ?, pswdstatus = ? WHERE userID = ?;";
@@ -155,4 +154,4 @@ if (isset($_POST['change_pswd'])) {
 }
 
 
- ?>
+?>

@@ -80,6 +80,15 @@ body{
   box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);
 }
 
+li.ql-indent-1 { margin-left: 3em; }
+li.ql-indent-2 { margin-left: 4.5em; }
+li.ql-indent-3 { margin-left: 6em; }
+li.ql-indent-4 { margin-left: 7.5em; }
+li.ql-indent-5 { margin-left: 9em; }
+li.ql-indent-6 { margin-left: 10.5em; }
+li.ql-indent-7 { margin-left: 12em; }
+li.ql-indent-8 { margin-left: 13.5em; }
+
 #calendar{
   -webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);
   -moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);
@@ -265,6 +274,17 @@ body{
   }
   .notes-overview h2, .announcements-overview h2{
     width: 330px !important;
+  }
+}
+
+@media( min-width:2400px){
+  .graph{
+    margin-top:0px !important;;
+    margin-left:60px !important;
+  }
+  .transactiontable{
+    margin-left:0px !important;
+    margin-top:-40px !important;
   }
 }
 

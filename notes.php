@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params('o', '/', 'https://isadashboard.000webhostapp.com/', isset($_SERVER["HTTPS"]), true);
 require_once "./connections/connect.php";
 session_start();
 ?>
@@ -6,8 +7,8 @@ session_start();
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-8">
-  <title></title>
+    <meta charset="utf-8">
+    <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -22,37 +23,37 @@ session_start();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5/main.min.css,npm/fullcalendar@5/main.min.css">
 
 </head>
-  <body style="background:#fafcfe;">
-    <div class="content d-flex">
-        <?php require"nav.php";?>
-      <div class="main-content">
-          <?php require"uppernav.php";?>
+<body style="background:#fafcfe;">
+<div class="content d-flex">
+    <?php require"nav.php";?>
+    <div class="main-content">
+        <?php require"uppernav.php";?>
         <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">NOTES</h2>
         <div class="center-content d-flex flex-wrap d-flex justify-content-center" style="width:90%;margin:0px auto;padding-top:50px;">
-          <div class="announcement-form" style="margin-top:40px;text-align:center;">
-            <form class="" action="./includes/notesinc.php" method="post">
-              <textarea name="note" rows="10" cols="80" style="resize:none;background:none;border:2px solid black;padding:10px;"></textarea><br><br>
-              <input type="submit" name="" value="Submit" style="width:160px;height:50px;background:#2b2f49;border-radius:10px;border:none;color:white;">
-            </form>
-          </div>
+            <div class="announcement-form" style="margin-top:40px;text-align:center;">
+                <form class="" action="./includes/notesinc.php" method="post">
+                    <textarea name="note" rows="10" cols="80" style="resize:none;background:none;border:2px solid black;padding:10px;"></textarea><br><br>
+                    <input type="submit" name="" value="Submit" style="width:160px;height:50px;background:#2b2f49;border-radius:10px;border:none;color:white;">
+                </form>
+            </div>
 
         </div>
-      </div>
     </div>
-    <script type="text/javascript">
+</div>
+<script type="text/javascript">
     var omak = document.getElementsByClassName('left-side-taskbar');
 
     function calc()
     {
-      if (document.getElementById('checkfml').checked)
-      {
-        document.getElementsByClassName('left-side-taskbar')[0].style.left = '0px';
-      } else {
-        document.getElementsByClassName('left-side-taskbar')[0].style.left = '-100%';
+        if (document.getElementById('checkfml').checked)
+        {
+            document.getElementsByClassName('left-side-taskbar')[0].style.left = '0px';
+        } else {
+            document.getElementsByClassName('left-side-taskbar')[0].style.left = '-100%';
 
-      }
+        }
     }
-    </script>
-    <?php require_once"footer.php" ?>
-  </body>
+</script>
+<?php require_once"footer.php" ?>
+</body>
 </html>

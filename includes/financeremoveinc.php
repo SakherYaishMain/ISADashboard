@@ -22,7 +22,7 @@ if(!mysqli_stmt_prepare($stmt, $sql)){
 }else{
     mysqli_stmt_bind_param($stmt, "issss", $amount, $reason, $submittedby, $datetime, $transtype);
     mysqli_stmt_execute($stmt);
-    echo "Done!";
+
     $result = mysqli_stmt_get_result($stmt);
     header("location:../finance.php");
 
