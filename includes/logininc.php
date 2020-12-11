@@ -106,12 +106,17 @@ if (isset($_POST['login_user'])) {
       $_SESSION['email'] = $row['email'];
       $_SESSION['userid'] = $row['userID'];
       $_SESSION['clearance'] = $row['clearance'];
+      $_SESSION['clubs'] = $row['clubs'];
       if($row['pswdstatus'] == "needed"){
         header("location:../passwordchange.php");
-      }
-      elseif ($row['pswdstatus'] == "changed"){
+      }elseif ($row['pswdstatus'] == "changed"){
         header("location:../home.php");
       }
+      if(count(explode(".", $_SESSION['clubs']))> 1 and $row['pswdstatus'] == "changed"){
+
+        header("location:../chooseclub.php");
+      }
+
     }else {
       header('location: ../index.php?error=wrong');
     }

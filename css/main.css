@@ -460,6 +460,16 @@ li.ql-indent-8 { margin-left: 13.5em; }
 }
 
 @media( max-width:430px){
+  .pswdchange{
+    background:none !important;
+    box-shadow: none !important;
+  }
+  .pswdchangecontent{
+    background-size: cover !important;
+  }
+  .pswdchange input{
+    width:350px !important;
+  }
   .money-left{
     margin-left:0px !important;
   }
