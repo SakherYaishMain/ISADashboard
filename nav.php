@@ -7,8 +7,8 @@ if (!isset($_SESSION['username'])) {
 
 <div class="left-side-taskbar">
     <div class="title-left-taskbar d-flex align-items-center" style="padding-top:20px;color:white;padding-left:10px;">
-        <i class="fab fa-fedora" style="color:White;font-size:45px;padding-right:15px;"></i>
-        <h4 style="margin:0px;"><strong>ISA</strong>TEAM</h4>
+        <i class="fas fa-leaf" style="color:White;font-size:45px;padding-right:15px;"></i>
+        <h4 style="margin:0px;"><strong>Black</strong>Rose</h4>
     </div>
     <p style="color:grey;margin-left:30px;margin-top:50px;">MAIN</p>
 

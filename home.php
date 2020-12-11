@@ -31,7 +31,8 @@ session_start();
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>
-        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">OVERVIEW</h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;"><?php echo $_SESSION['currentclub'];?></h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:20px;font-size:20px;">OVERVIEW</h2>
         <div class="center-content d-flex flex-wrap" style="width:90%;margin:0px auto;padding-top:50px;">
 
 
@@ -63,11 +64,12 @@ session_start();
                 <h2 style="font-weight:600;margin-left:30px;margin-top:20px;border-bottom:3px solid black;padding-bottom:10px;width:325px;">Latest meeting notes</h2>
                 <p style="margin:30px;"><?php
                     require_once"./connections/connect.php";
-                    $sql = "SELECT * FROM note  ORDER BY noteID DESC LIMIT 1;";
+                    $sql = "SELECT * FROM notes WHERE club = ? ORDER BY noteID DESC LIMIT 1;";
                     $stmt = mysqli_stmt_init($link);
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Statement Failed";
                     }else{
+                        mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);
 
@@ -85,13 +87,13 @@ session_start();
             <div class="announcements-overview">
                 <h2 style="font-weight:600;margin-left:30px;margin-top:20px;border-bottom:3px solid black;padding-bottom:10px;width:360px;">Latest announcements</h2>
                 <p style="margin:30px;"><?php
-                    $sql = "SELECT * FROM announcements  ORDER BY announcementID DESC LIMIT 1;";
+                    $sql = "SELECT * FROM announcements WHERE club = ? ORDER BY announcementID DESC LIMIT 1;";
 
                     $stmt = mysqli_stmt_init($link);
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Statement Failed";
                     }else{
-
+                        mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);
                         while($row = mysqli_fetch_array($result)){

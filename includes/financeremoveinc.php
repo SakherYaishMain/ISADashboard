@@ -15,14 +15,13 @@ $reason = $_POST['reason'];
 $submittedby = $_SESSION['username'];
 $transtype = "Expense";
 
-$sql = "INSERT INTO finance (amount, reason, submittedby, datetimeval, transtype) VALUES (?, ?, ?, ?, ?);";
+$sql = "INSERT INTO finance (amount, reason, submittedby, datetimeval, transtype, club) VALUES (?, ?, ?, ?, ?, ?);";
 $stmt = mysqli_stmt_init($link);
 if(!mysqli_stmt_prepare($stmt, $sql)){
     echo "SQL Error";
 }else{
-    mysqli_stmt_bind_param($stmt, "issss", $amount, $reason, $submittedby, $datetime, $transtype);
+    mysqli_stmt_bind_param($stmt, "isssss", $amount, $reason, $submittedby, $datetime, $transtype, $_SESSION['currentclub']);
     mysqli_stmt_execute($stmt);
-
     $result = mysqli_stmt_get_result($stmt);
     header("location:../finance.php");
 

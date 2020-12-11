@@ -92,7 +92,7 @@ require_once './htmlpurifier/library/HTMLPurifier.auto.php';
                     </thead>
                     <tbody>
                     <?php
-                    $sql = "SELECT * FROM agenda ORDER BY entryID DESC;";
+                    $sql = "SELECT * FROM agenda WHERE club = ? ORDER BY entryID DESC;";
                     $stmt = mysqli_stmt_init($link);
                     $config = HTMLPurifier_Config::createDefault();
                     $purifier = new HTMLPurifier($config);
@@ -100,6 +100,7 @@ require_once './htmlpurifier/library/HTMLPurifier.auto.php';
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Statement Failed";
                     }else{
+                        mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);
 

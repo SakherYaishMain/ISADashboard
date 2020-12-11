@@ -44,11 +44,12 @@ session_start();
                             <i class="fas fa-dollar-sign" style="<?php if($_SESSION['clearance'] < 2 OR $_SESSION['clearance'] == "2S" OR $_SESSION['clearance'] == "2SM"){ echo 'display:none;';}?>position: absolute;font-size:30px;line-height:40px;margin-left:5px;"></i>
 
                             <input type="number" name="amount" style="<?php if($_SESSION['clearance'] < 2 OR $_SESSION['clearance'] == "2S" OR $_SESSION['clearance'] == "2SM"){ echo 'display:none;';}?>width:90%;height:40px;border-radius:5px;background:white;border:1px solid grey;padding:0px 35px;font-size:20px;font-weight: bold;" id="dataholderinput" required <?php
-                            $sql = "SELECT sum(amount) FROM finance WHERE transtype='Addition'";
+                            $sql = "SELECT sum(amount) FROM finance WHERE transtype='Addition' AND club = ?";
                             $stmt = mysqli_stmt_init($link);
                             if(!mysqli_stmt_prepare($stmt, $sql)){
                                 echo "SQL Statement Failed";
                             }else{
+                                mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
                                 mysqli_stmt_execute($stmt);
                                 $result = mysqli_stmt_get_result($stmt);
 
@@ -56,12 +57,13 @@ session_start();
                                     $totalmoney = $row['sum(amount)'];
                                 }
                             }
-                            $sql2 = "SELECT sum(amount) FROM finance WHERE transtype='Expense'";
+                            $sql2 = "SELECT sum(amount) FROM finance WHERE transtype='Expense' AND club = ?";
                             $stmt2 = mysqli_stmt_init($link);
                             if(!mysqli_stmt_prepare($stmt2, $sql2)){
                                 echo "SQL Statement Error";
                             }
                             else{
+                                mysqli_stmt_bind_param($stmt2, "s", $_SESSION['currentclub']);
                                 mysqli_stmt_execute($stmt2);
                                 $result2 = mysqli_stmt_get_result($stmt2);
                                 while($row2 = mysqli_fetch_array($result2)){
@@ -125,11 +127,12 @@ session_start();
                     ?></p>
                 <div style="width:90%;height:2px;background: black;margin:0px auto;"></div>
                 <p><strong>Total Expenses: </strong><?php
-                    $sql = "SELECT sum(amount) FROM finance WHERE transtype = 'Expense'";
+                    $sql = "SELECT sum(amount) FROM finance WHERE transtype = 'Expense' AND club = ?";
                     $stmt = mysqli_stmt_init($link);
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Error";
                     }else{
+                        mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);
                         while($row = mysqli_fetch_array($result)){
@@ -158,11 +161,12 @@ session_start();
                     </thead>
                     <tbody>
                     <?php
-                    $sql = "SELECT * FROM finance ORDER BY transactionID DESC;";
+                    $sql = "SELECT * FROM finance WHERE club = ? ORDER BY transactionID DESC;";
                     $stmt = mysqli_stmt_init($link);
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Statement Failed";
                     }else{
+                        mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);
 
