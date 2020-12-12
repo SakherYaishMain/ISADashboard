@@ -23,8 +23,14 @@ session_start();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5/main.min.css,npm/fullcalendar@5/main.min.css">
 
 </head>
-<body style="background:#fafcfe;">
-<div class="content d-flex">
+<body style="background:#fafcfe;height:100vh;">
+<style>
+
+    #updateinfoform{
+        margin-bottom:30px;
+    }
+</style>
+<div class="content d-flex" style="">
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>

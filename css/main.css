@@ -7,16 +7,22 @@ a:hover{
   text-decoration: none;
 }
 
+html{
+  height:100%;
+}
+
 body{
   font-family: Helvetica;
-  height:100%
+  height:100%;
 }
 
 .left-side-taskbar{
   background: #2b2f49;
   width:250px;
   z-index:99;
-
+  height:100vh;
+  position:fixed;
+  overflow-y:auto;
 }
 
 .interesting{
@@ -98,6 +104,21 @@ li.ql-indent-8 { margin-left: 13.5em; }
   margin-top:-120px;
 }
 
+.editbtn{
+  padding:8px 15px;
+  border:none;
+  background:#2b2f49;
+  border-radius: 10px;
+  color:white;
+}
+
+.divider{
+  height:3px;
+  width:100%;
+  background:lightgrey;
+  margin:40px auto;
+}
+
 .fc{
   padding:10px 10px !important;
 }
@@ -135,6 +156,7 @@ li.ql-indent-8 { margin-left: 13.5em; }
 
 .main-content{
   width: calc(100% - 250px);
+  margin-left:250px;
 }
 
 .left-info p{
@@ -288,6 +310,18 @@ li.ql-indent-8 { margin-left: 13.5em; }
   }
 }
 
+@media( max-width:1370px){
+  .notes-overview{
+    margin-left:30px !important;
+  }
+  #calendar{
+    margin-top:-230px;
+  }
+  .announcements-overview{
+    margin-left:30px !important;
+  }
+}
+
 @media( max-width:1300px){
   .insert-finance{
     width:400px !important;
@@ -338,7 +372,8 @@ li.ql-indent-8 { margin-left: 13.5em; }
     width:90% !important;
   }
   .main-content{
-    width:calc(100% - 220px)
+    width:calc(100% - 220px);
+    margin-left:0px !important;
   }
   .money-left{
     width:310px;

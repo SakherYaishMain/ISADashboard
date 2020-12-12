@@ -4,6 +4,12 @@ require_once "./connections/connect.php";
 session_start();
 ?>
 
+<?php
+if($_SESSION['clearance']<3){
+    header("location:home.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -24,6 +30,11 @@ session_start();
 
 </head>
 <body style="background:#fafcfe;">
+<style>
+    footer{
+        margin-top:15%;
+    }
+</style>
 <div class="content d-flex">
     <?php require"nav.php";?>
     <div class="main-content">

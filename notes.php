@@ -4,6 +4,12 @@ require_once "./connections/connect.php";
 session_start();
 ?>
 
+<?php
+if($_SESSION['clearance']<3){
+    header("location:home.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>

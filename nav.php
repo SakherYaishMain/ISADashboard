@@ -32,6 +32,8 @@ if (!isset($_SESSION['username'])) {
 
         <a href=""><li><i class="fas fa-list-ul" style="margin-right:20px;"></i>To do list</li></a>
         <a href="agenda.php"><li><i class="far fa-calendar-check" style="margin-right:20px;"></i>Agenda</li></a>
+        <a href="agenda.php"><li><i class="far fa-star" style="margin-right:14px;"></i>Executive Branch</li></a>
+        <a href="files.php"><li><i class="far fa-file-archive" style="margin-right:20px;"></i>Files</li></a>
     </ul>
 
 
@@ -40,7 +42,7 @@ if (!isset($_SESSION['username'])) {
         <a href="settings.php"><li><i class="fas fa-cogs" style="margin-right:20px;"></i>Settings</li></a>
         <a href=""><li><i class="far fa-question-circle" style="margin-right:20px;"></i>Support</li></a>
         <a href="index.php?logout='1'"><li><i class="fas fa-sign-out-alt" style="margin-right:20px;margin-bottom:30px;"></i>Log out</li></a>
-        <a href=""><li></li></a>
+        <a href=""><li style=""></li></a>
     </ul>
 
 

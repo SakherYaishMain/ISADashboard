@@ -1,7 +1,7 @@
 <?php
 session_set_cookie_params('o', '/', 'https://isadashboard.000webhostapp.com/', isset($_SERVER["HTTPS"]), true);
 session_start();
-
+require_once"./connections/connect.php";
 
 
 ?>
@@ -41,7 +41,40 @@ session_start();
                     <i class="fas fa-dollar-sign" style="color:#085646; font-size:60px;border:5px solid black;padding:10px 20px;border-radius:50%;border-color:#085646;margin-left:20px;"></i>
                 </div>
                 <div class="money-left-right">
-                    <p class='moneyamount' style="font-size:35px;margin:0px;margin-left:20px;"><strong>3,281</strong> USD</p>
+                    <p class='moneyamount' style="font-size:35px;margin:0px;margin-left:20px;"><strong>
+                            <?php
+                            $sql = "SELECT sum(amount) FROM finance WHERE transtype='Addition' AND club = ?";
+                            $stmt = mysqli_stmt_init($link);
+                            if(!mysqli_stmt_prepare($stmt, $sql)){
+                                echo "SQL Statement Failed";
+                            }else{
+                                mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
+
+                                while($row = mysqli_fetch_array($result)){
+                                    $totalmoney = $row['sum(amount)'];
+                                }
+                            }
+                            $sql2 = "SELECT sum(amount) FROM finance WHERE transtype='Expense' AND club = ?";
+                            $stmt2 = mysqli_stmt_init($link);
+                            if(!mysqli_stmt_prepare($stmt2, $sql2)){
+                                echo "SQL Statement Error";
+                            }
+                            else{
+                                mysqli_stmt_bind_param($stmt2, "s", $_SESSION['currentclub']);
+                                mysqli_stmt_execute($stmt2);
+                                $result2 = mysqli_stmt_get_result($stmt2);
+                                while($row2 = mysqli_fetch_array($result2)){
+                                    $totalexpense = $row2['sum(amount)'];
+                                }
+                            }
+                            //echo $totalexpense."ass";
+                            //echo $totalmoney;
+                            $profit = $totalmoney - $totalexpense;
+                            echo $profit;
+                            ?>
+                        </strong> USD</p>
                     <p class='submoney' style="font-size:15px;margin:0px;margin-left:20px;"><strong>Total Budget</strong></p>
                 </div>
             </div>
@@ -53,7 +86,14 @@ session_start();
                     <i class="fas fa-chart-line" style="color:#8b0000; font-size:60px;border:5px solid black;padding:10px 20px;border-radius:50%;border-color:#8b0000;margin-left:20px;"></i>
                 </div>
                 <div class="money-left-right">
-                    <p class='moneyamount' style="font-size:35px;margin:0px;margin-left:20px;"><strong>3,281</strong> USD</p>
+                    <p class='moneyamount' style="font-size:35px;margin:0px;margin-left:20px;"><strong>
+                            <?php
+                            if($totalexpense != ""){
+                                echo $totalexpense;
+                            }else{
+                                echo "0";
+                            }
+                            ?></strong> USD</p>
                     <p class='submoney' style="font-size:15px;margin:0px;margin-left:20px;"><strong>Total Money Left</strong></p>
                 </div>
 
@@ -63,7 +103,7 @@ session_start();
             <div class="notes-overview">
                 <h2 style="font-weight:600;margin-left:30px;margin-top:20px;border-bottom:3px solid black;padding-bottom:10px;width:325px;">Latest meeting notes</h2>
                 <p style="margin:30px;"><?php
-                    require_once"./connections/connect.php";
+
                     $sql = "SELECT * FROM notes WHERE club = ? ORDER BY noteID DESC LIMIT 1;";
                     $stmt = mysqli_stmt_init($link);
                     if(!mysqli_stmt_prepare($stmt, $sql)){
