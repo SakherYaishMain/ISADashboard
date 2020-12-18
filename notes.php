@@ -2,6 +2,7 @@
 session_set_cookie_params('o', '/', 'https://isadashboard.000webhostapp.com/', isset($_SERVER["HTTPS"]), true);
 require_once "./connections/connect.php";
 session_start();
+$_SESSION['currentpage'] = "notes";
 ?>
 
 <?php

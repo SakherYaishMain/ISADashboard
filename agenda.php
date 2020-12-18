@@ -3,6 +3,7 @@ session_set_cookie_params('o', '/', 'https://isadashboard.000webhostapp.com/', i
 require_once "./connections/connect.php";
 session_start();
 require_once './htmlpurifier/library/HTMLPurifier.auto.php';
+$_SESSION['currentpage'] = "agenda";
 ?>
 
 <!DOCTYPE html>

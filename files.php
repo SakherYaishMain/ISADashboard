@@ -3,6 +3,7 @@ session_set_cookie_params('o', '/', 'https://isadashboard.000webhostapp.com/', i
 require_once "./connections/connect.php";
 session_start();
 require_once './htmlpurifier/library/HTMLPurifier.auto.php';
+$_SESSION['currentpage'] = "files";
 ?>
 
 <?php
@@ -28,6 +29,7 @@ if($_SESSION['clearance']<3){
     <link href="https://fonts.googleapis.com/css2?family=Enriqueta:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5,npm/fullcalendar@5/locales-all.min.js,npm/fullcalendar@5/locales-all.min.js,npm/fullcalendar@5/main.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5/main.min.css,npm/fullcalendar@5/main.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
 <body style="background:#fafcfe;">
@@ -36,9 +38,19 @@ if($_SESSION['clearance']<3){
     <div class="main-content">
         <?php require"uppernav.php";?>
         <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">FILES</h2>
-        <div class="center-content " style="width:90%;margin:0px auto;padding-top:50px;">
+        <div class="center-content" style="width:90%;margin:0px auto;padding-top:50px;">
+            <input type="button" class="editbtn" value="Notes" style="margin-bottom:30px;" onclick="shownotes()">
+            <input type="button" class="editbtn" value="Announcements" style="margin-bottom:30px;" onclick="showannouncements()">
+            <input type="button" class="editbtn" value="Agendas" style="margin-bottom:30px;" onclick="showagendas()">
+            <input type="button" class="editbtn" value="Finances" style="margin-bottom:30px;" onclick="showfinances()">
+            <div class="notes-section">
             <h5>NOTES</h5><br>
-            <a href="edit.php?file=notes"><input type="button" class="editbtn" value="Edit Notes" style="margin-bottom:20px;"/></a>
+                <?php
+                    if($_SESSION['clearance'] > 2 or $_SESSION['clearance'] == "2S"){
+                        echo '<a href="edit.php?file=notes"><input type="button" class="editbtn" value="Edit Notes" style="margin-bottom:20px;"/></a>';
+                    }
+                ?>
+
             <div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
             <table class="table table-striped" id="tablefinance">
                 <thead>
@@ -78,9 +90,17 @@ if($_SESSION['clearance']<3){
                 </tbody>
             </table>
             </div>
-            <div class="divider"></div>
+                <div class="divider"></div>
+            </div>
+
+            <div class="announcements-section">
             <h5 style="margin-top:40px;">Announcements</h5><br>
-            <input type="button" class="editbtn" value="Edit Announcements" style="margin-bottom:20px;"/>
+                <?php
+                if($_SESSION['clearance'] > 2){
+                    echo '<a href="edit.php?file=announcement"><input type="button" class="editbtn" value="Edit Announcements" style="margin-bottom:20px;"/></a>';
+                }
+                ?>
+
             <div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
             <table class="table table-striped" id="tablefinance">
                 <thead>
@@ -120,9 +140,17 @@ if($_SESSION['clearance']<3){
                 </tbody>
             </table>
             </div>
-            <div class="divider"></div>
+                <div class="divider"></div>
+            </div>
+
+            <div class="agendas-section">
             <h5 style="margin-top:40px;">Agendas</h5><br>
-            <input type="button" class="editbtn" value="Edit Agendas" style="margin-bottom:20px;"/>
+                <?php
+                if($_SESSION['clearance'] > 2){
+                    echo '<a href="edit.php?file=agendas"><input type="button" class="editbtn" value="Edit Agendas" style="margin-bottom:20px;"/></a>';
+                }
+                ?>
+
             <div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
                 <table class="table table-striped" style="overflow: auto">
                     <thead>
@@ -165,9 +193,17 @@ if($_SESSION['clearance']<3){
                     </tbody>
                 </table>
             </div>
-            <div class="divider"></div>
+                <div class="divider"></div>
+            </div>
+
+            <div class="finances-section">
             <h5 style="margin-top:40px;">Finances</h5><br>
-            <input type="button" class="editbtn" value="Edit Finances" style="margin-bottom:20px;"/>
+                <?php
+                if($_SESSION['clearance'] > 2){
+                    echo '<a href="edit.php?file=finances"><input type="button" class="editbtn" value="Edit Finances" style="margin-bottom:20px;"/></a>';
+                }
+                ?>
+
             <div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
             <table class="table table-striped" id="tablefinance">
                 <thead>
@@ -210,9 +246,37 @@ if($_SESSION['clearance']<3){
                 </tbody>
             </table>
             </div>
+            </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    function showfinances(){
+        $('.finances-section').eq(0).addClass("showsection animate__animated animate__bounceIn");
+        $('.agendas-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.announcements-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.notes-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+    }
+    function shownotes(){
+        $('.notes-section').eq(0).addClass("showsection animate__animated animate__bounceIn");
+        $('.agendas-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.announcements-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.finances-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+    }
+    function showagendas(){
+        $('.agendas-section').eq(0).addClass("showsection animate__animated animate__bounceIn");
+        $('.announcements-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.finances-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.notes-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+    }
+    function showannouncements(){
+        $('.announcements-section').eq(0).addClass("showsection animate__animated animate__bounceIn");
+        $('.finances-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.notes-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+        $('.agendas-section').eq(0).removeClass("showsection animate__animated animate__bounceIn");
+    }
+</script>
 <script type="text/javascript">
     var omak = document.getElementsByClassName('left-side-taskbar');
 
