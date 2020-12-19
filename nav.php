@@ -35,7 +35,7 @@ $currentpage = $_SESSION['currentpage'];
 
         <a href=""><li><i class="fas fa-list-ul" style="margin-right:20px;"></i>To do list</li></a>
         <a href="agenda.php"><li class="dashlink" data-currentpage="agenda"><i class="far fa-calendar-check" style="margin-right:20px;"></i>Agenda</li></a>
-        <a href="agenda.php"><li class="dashlink" data-currentpage="executive"><i class="far fa-star" style="margin-right:14px;"></i>Executive Branch</li></a>
+        <a href="executive.php"><li class="dashlink" data-currentpage="executive"><i class="far fa-star" style="margin-right:14px;"></i>Executive Branch</li></a>
         <a href="files.php"><li class="dashlink" data-currentpage="files"><i class="far fa-file-archive" style="margin-right:20px;"></i>Files</li></a>
     </ul>
 

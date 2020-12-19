@@ -147,7 +147,7 @@ if (isset($_POST['change_pswd'])) {
       mysqli_stmt_bind_param($stmt, "ssi", $finalpswd, $pswdstatus, $userid);
       mysqli_stmt_execute($stmt);
       $result = mysqli_stmt_get_result($stmt);
-      header("location:../home.php");
+      header("location:../chooseclub.php");
 
 
     }
