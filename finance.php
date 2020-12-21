@@ -38,7 +38,8 @@ if($_SESSION['clearance']<2){
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>
-        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">FINANCE</h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;"><?php echo $_SESSION['currentclub'];?></h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:20px;font-size:20px;">FINANCE</h2>
         <div class="center-content d-flex flex-wrap d-flex" style="width:90%;margin:0px auto;padding-top:50px;">
             <div class="insert-finance money-left d-flex justify-content-center flex-wrap" style="width:500px;height:350px;background:;">
                 <div class="financetitle align-items-center justify-content-flexstart" style="width:100%;">
@@ -86,7 +87,7 @@ if($_SESSION['clearance']<2){
                             echo "/>";
                             ?>
                             <?php
-                            if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] == "2T"){
+                            if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] === "2T"){
                                 echo '<input type="text" placeholder="Reason" name="reason" style="margin-top:20px;width:90%;height:40px;border-radius:5px;background:white;border:1px solid grey;padding:0px 15px;font-size:20px;font-weight: bold;" required/>
                             <input type="submit" value="Submit" style="background: #2b2f49;border:none;color:White;margin-top:20px;width:150px;height:35px;border-radius:5px;"/>';
                             }
@@ -107,7 +108,7 @@ if($_SESSION['clearance']<2){
                 <div class="financeinsert d-flex justify-content-center" style="width:100%;">
                     <div style="width: 100%;text-align:center;">
                         <?php
-                        if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] == "2T"){
+                        if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] === "2T"){
                             echo '<form class="" action="./includes/financeremoveinc.php" method="post">
                             <i class="fas fa-dollar-sign" style="position: absolute;font-size:30px;line-height:40px;margin-left:5px;"></i>
                             <input type="number" name="amount" style="width:90%;height:40px;border-radius:5px;background:white;border:1px solid grey;padding:0px 35px;font-size:20px;font-weight: bold;" required/>

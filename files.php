@@ -37,7 +37,8 @@ if($_SESSION['clearance']<3){
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>
-        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">FILES</h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;"><?php echo $_SESSION['currentclub'];?></h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:20px;font-size:20px;">FILES</h2>
         <div class="center-content" style="width:90%;margin:0px auto;padding-top:50px;">
             <input type="button" class="editbtn" value="Notes" style="margin-bottom:30px;" onclick="shownotes()">
             <input type="button" class="editbtn" value="Announcements" style="margin-bottom:30px;" onclick="showannouncements()">
@@ -46,7 +47,8 @@ if($_SESSION['clearance']<3){
             <div class="notes-section">
             <h5>NOTES</h5><br>
                 <?php
-                    if($_SESSION['clearance'] > 2 or $_SESSION['clearance'] == "2S"){
+
+                    if($_SESSION['clearance'] > 2 or $_SESSION['clearance'] === "2S"){
                         echo '<a href="edit.php?file=notes"><input type="button" class="editbtn" value="Edit Notes" style="margin-bottom:20px;"/></a>';
                     }
                 ?>
@@ -96,7 +98,7 @@ if($_SESSION['clearance']<3){
             <div class="announcements-section">
             <h5 style="margin-top:40px;">Announcements</h5><br>
                 <?php
-                if($_SESSION['clearance'] > 2){
+                if($_SESSION['clearance'] > 2 or $_SESSION['clearance']==="2S" or $_SESSION['clearance']==="2T" or $_SESSION['clearance']==="2SM"){
                     echo '<a href="edit.php?file=announcement"><input type="button" class="editbtn" value="Edit Announcements" style="margin-bottom:20px;"/></a>';
                 }
                 ?>

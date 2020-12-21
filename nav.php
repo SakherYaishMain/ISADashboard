@@ -18,24 +18,29 @@ $currentpage = $_SESSION['currentpage'];
     <ul class="taskbar" id="linkparent">
         <a href="home.php"><li class="dashlink" data-currentpage="dashboard"><i class="fas fa-columns" style="margin-right:20px;"></i>Dashboard</li></a>
         <?php
-            if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] == "2S" OR $_SESSION['clearance'] == "2T" OR $_SESSION['clearance'] == "2SM"){
+            if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] === "2S" OR $_SESSION['clearance'] === "2T" OR $_SESSION['clearance'] === "2SM"){
                 echo '<a href="announcements.php"><li class="dashlink" data-currentpage="announcements"><i class="fas fa-bullhorn" style="margin-right:20px;"></i>Announcements</li></a>';
             }
         ?>
         <?php
-        if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] == "2S"){
+        if($_SESSION['clearance'] > 2 OR $_SESSION['clearance'] === "2S"){
             echo '<a href="notes.php"><li class="dashlink" data-currentpage="notes"><i class="far fa-clipboard" style="margin-right:20px;"></i>Meeting Notes</li></a>';
         }
         ?>
         <?php
-            if($_SESSION['clearance'] > 1) {
+            if($_SESSION['clearance'] > 1 or $_SESSION['clearance'] === "2S" or $_SESSION['clearance'] === "2T") {
                 echo '<a href="finance.php"><li class="dashlink" data-currentpage="finance"><i class="fas fa-landmark" style="margin-right:20px;"></i>Finances</li></a>';
             }
         ?>
 
         <a href="todolist.php"><li class="dashlink" data-currentpage="todo"><i class="fas fa-list-ul" style="margin-right:20px;"></i>To do list</li></a>
         <a href="agenda.php"><li class="dashlink" data-currentpage="agenda"><i class="far fa-calendar-check" style="margin-right:20px;"></i>Agenda</li></a>
-        <a href="executive.php"><li class="dashlink" data-currentpage="executive"><i class="far fa-star" style="margin-right:14px;"></i>Executive Branch</li></a>
+        <?php
+        if($_SESSION['clearance'] > 2) {
+            echo '<a href="executive.php"><li class="dashlink" data-currentpage="executive"><i class="far fa-star" style="margin-right:14px;"></i>Executive Branch</li></a>';
+        }
+        ?>
+
         <a href="files.php"><li class="dashlink" data-currentpage="files"><i class="far fa-file-archive" style="margin-right:20px;"></i>Files</li></a>
     </ul>
 

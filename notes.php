@@ -6,7 +6,7 @@ $_SESSION['currentpage'] = "notes";
 ?>
 
 <?php
-if($_SESSION['clearance']<3){
+if($_SESSION['clearance']<2 or $_SESSION['clearance'] === "2T" or $_SESSION['clearance'] === "2SM"){
     header("location:home.php");
 }
 ?>
@@ -40,7 +40,8 @@ if($_SESSION['clearance']<3){
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>
-        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">NOTES</h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;"><?php echo $_SESSION['currentclub'];?></h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:20px;font-size:20px;">NOTES</h2>
         <div class="center-content d-flex flex-wrap d-flex justify-content-center" style="width:90%;margin:0px auto;padding-top:50px;">
             <div class="announcement-form" style="margin-top:40px;text-align:center;">
                 <form class="" action="./includes/notesinc.php" method="post">

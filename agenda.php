@@ -55,7 +55,8 @@ $_SESSION['currentpage'] = "agenda";
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>
-        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">AGENDA</h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;"><?php echo $_SESSION['currentclub'];?></h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:20px;font-size:20px;">AGENDA</h2>
 
         <div class="center-content flex-wrap justify-content-center" style="width:90%;margin:0px auto;padding-top:50px;">
             <?php

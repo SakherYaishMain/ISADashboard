@@ -58,6 +58,10 @@ body{
   display: none;
 }
 
+.editinput{
+  background:white !important;
+}
+
 .upper-main{
   justify-content: flex-end !important;
   position: fixed;
@@ -430,6 +434,8 @@ li.ql-indent-8 { margin-left: 13.5em; }
     margin-bottom:30px;
     margin-left:0px !important;
   }
+
+
 
   .info{
     margin-right:100px !important;

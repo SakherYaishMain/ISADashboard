@@ -39,10 +39,11 @@ require_once './htmlpurifier/library/HTMLPurifier.auto.php';
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;"><?php echo $_SESSION['currentclub'];?></h2>
         <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">EDIT</h2>
         <div class="center-content " style="width:90%;margin:0px auto;padding-top:50px;">
             <?php
-                if($_SESSION['clearance'] == "2s" OR $_SESSION['clearance'] > 2){
+                if($_SESSION['clearance'] === "2S" OR $_SESSION['clearance'] > 2){
                     if($_REQUEST['file'] == "notes"){
                         echo '<div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
             <table class="table table-striped" id="tablefinance">
@@ -88,7 +89,7 @@ echo '
             </div>';
                     }
                 }
-                if($_SESSION['clearance'] == "2T" OR $_SESSION['clearance'] > 2) {
+                if($_SESSION['clearance'] === "2T" OR $_SESSION['clearance'] > 2) {
                     if ($_REQUEST['file'] == "finances") {
                         echo '<div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
             <table class="table table-striped" id="tablefinance">
@@ -138,7 +139,7 @@ echo '
             </div>';
                     }
                 }
-            if($_SESSION['clearance'] > 2) {
+            if($_SESSION['clearance'] > 2 or $_SESSION['clearance']==="2S" or $_SESSION['clearance']==="2T" or $_SESSION['clearance']==="2SM") {
                 if ($_REQUEST['file'] == "announcement") {
                     echo '<div class="tableagenda" style="overflow: auto;background: white;border-radius: 10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin-bottom:30px;">
             <table class="table table-striped" id="tablefinance">

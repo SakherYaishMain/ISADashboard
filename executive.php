@@ -38,7 +38,8 @@ if($_SESSION['clearance']<3){
     <?php require"nav.php";?>
     <div class="main-content">
         <?php require"uppernav.php";?>
-        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;">Executive Branch</h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:150px;font-size:20px;"><?php echo $_SESSION['currentclub'];?></h2>
+        <h2 style="width:90%;margin:0px auto;font-weight:600;margin-top:20px;font-size:20px;">Executive Branch</h2>
         <div class="center-content d-flex flex-wrap d-flex" style="width:90%;margin:0px auto;padding-top:30px;">
 
             <div class="insert-finance money-left d-flex justify-content-center flex-wrap" style="width:500px;height:500px;background:;">
@@ -150,6 +151,7 @@ if($_SESSION['clearance']<3){
                         <th scope="col">Added By</th>
                         <th scope="col">Clearance</th>
                         <th scope="col">Position</th>
+                        <th scope="col">Edit/Save</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -164,21 +166,41 @@ if($_SESSION['clearance']<3){
                         mysqli_stmt_bind_param($stmt, "ss", $yesclub2, $_SESSION['currentclub']);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);
-
+                        $index = 0;
                         while($row = mysqli_fetch_array($result)){
-                            echo "
+
+                            echo "<form method='post' action='./includes/updatemember.php?id=".$row['userID']."' id='thisform'>
                                <tr>
                                     <th scope='row'>".htmlspecialchars($row['userID'])."</th>
                                     <td>".htmlspecialchars($row['username'])."</td>
                                     <td>".htmlspecialchars($row['email'])."</td>
                                     <td>".htmlspecialchars($row['addedby'])."</td>
-                                    <td>".htmlspecialchars($row['level'])."</td>
-                                    <td>".htmlspecialchars($row['position'])."</td>
-                                </tr>
-                            ";
+                                    ";
+                                    if($row['level'] <= $_SESSION['clearance']){
+                                        echo "<td><input type='number'  name='level' min='1' max='5' style='width:60px;background:none;border:none;' class='editmember' disabled value='".htmlspecialchars($row['level'])."'</td>";
+                                    }else{
+                                        echo "<td>".htmlspecialchars($row['level'])."</td>";
+                                    }
+                            echo"
+                                    
+                                    <td>".htmlspecialchars($row['position'])."</td>";
+                                if($row['level'] <= $_SESSION['clearance']){
+                                    echo "<td><input type='button' value='Edit' name='level' style='height:35px;width:80px;padding:5px;' onclick='editmember(".$index.")' class='editbtn savemember'></form></td>";
+                                }else{
+                                    echo "<td><input disabled type='button' value='Edit' style='background:grey;height:35px;width:80px;padding:5px;' class='editbtn savemember'/> </td>";
+                                }
 
-                        }
-                    }
+                                echo "</tr>";
+                                }
+                                $index = $index + 1;
+}
+
+
+
+
+
+
+
                     ?>
 
                     </tbody>
@@ -190,6 +212,26 @@ if($_SESSION['clearance']<3){
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function editmember(number){
+        var inputwanted = document.getElementsByClassName("editmember")[number];
+        inputwanted.removeAttribute("disabled");
+        var btn = document.getElementsByClassName("savemember")[number];
+        inputwanted.classList.add("editinput");
+        if(btn.value == "Edit"){
+            btn.value = "Save";
+        }else{
+            btn.value = "Edit";
+            inputwanted.classList.remove("editinput");
+            document.getElementById("thisform").submit();
+        }
+
+
+    }
+
+</script>
+
 
 <script type="text/javascript">
     var omak = document.getElementsByClassName('left-side-taskbar');
