@@ -28,11 +28,20 @@ if (isset($_GET['logout'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Enriqueta:wght@700&display=swap" rel="stylesheet">
 </head>
-<body style="background-image: url('./images/abstractbackground.png');font-family: 'Enriqueta', serif;">
+<body style="background-image: url('./images/wai.png');font-family: 'Enriqueta', serif;background-size: contain">
 <style>
     .left-footer{
         width:0px !important;
         height:0px !important;
+
+    }
+    input{
+        height:35px;
+        width:80%;
+        padding-left:10px;
+    }
+    footer{
+
     }
 </style>
 <?php
@@ -52,24 +61,32 @@ if(isset($_REQUEST['error'])) {
 }
 ?>
 <div class="content d-flex justify-content-center align-items-center content-login" style="height:calc(100vh - 30px);">
-    <div class="login-box d-flex">
-        <div class="left-side-login" style="width:50%;">
-            <h2 style="font-weight:600;text-align:center;margin-top:70px;">Please Login</h2>
-            <form class="" action="./includes/logininc.php" method="post" style="width:70%;margin:0 auto;margin-top:50px;">
-                <label for="username">Username</label><br>
-                <input type="text" name="username" value="" placeholder="Username"><br><br>
-                <label for="password">Password</label><br>
-                <input type="password" name="password" value="" placeholder="Password" ><br><br>
-                <a href="index.php?error=forgot">Forgot your password?</a><br><br>
-                <a href="createclub.php">Create a Club!</a>
-                <input type="submit" name="login_user" value="Login" style="margin-top:40px; background:#085646;border:none;color:white;border-radius:10px;">
+    <div class="left-create" style="width: 60%;">
+        <div class="createform" style="background-color: rgba(243, 243, 243, 1);padding:0px 30px;border-radius:10px;width:55%;height:700px;margin:0px auto;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow: 3px 3px 10px 0px rgba(50, 50, 50, 0.6);">
+            <h1 style="text-align: center;padding-top:40px;">Create your club!</h1>
+            <form action="" method="post">
+                <label for="cname">Club Name</label><br>
+                <input type="text" name="cname"><br><br>
+                <label for="name">Your Name(First and Last)</label><br>
+                <input type="text" name="name"><br><br>
+                <label for="file">Upload a picture of your club's logo</label><br>
+                <input type="file" class="custom-file-input" name="file" id="file" style="padding:0px !important;"/>
+                <div class="choose d-flex flex-wrap" style="margin-top:20px;">
+                    <input type="button" style="width:50%;background-color: #212529;color:white;border:none;border-right:3px solid white;" value="Already have an account">
+                    <input type="button" style="width:50%;background-color: #212529;color:white;border:none;" value="Sign up for an account">
+                    <div style="width:100%;background-color: white;margin-top:10px;">
+                        <label for="name">Username</label><br>
+                        <input type="text" name="name"><br><br>
+                        <label for="name">Password</label><br>
+                        <input type="pswd" name="name"><br><br>
+                    </div>
+                    <div style="width:100%; height: 30px; background-color: red; display:none;"></div>
+                </div>
             </form>
         </div>
-        <div class="right-side-login d-flex justify-content-center align-items-center" style="width:50%; background-image:url('./images/aboutus.jpg');background-size:cover;background-position:center; color:white;font-size:50px;">
-
-
-            <p>Black Rose Portal</p>
-        </div>
+    </div>
+    <div class="right-create" style="width: 40%;">
+        <img src="./images/man.png" alt="" style="width:80%;height:80%;">
     </div>
 </div>
 <?php require_once"footer.php" ?>
