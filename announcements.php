@@ -44,7 +44,7 @@ if($_SESSION['clearance']<3){
         <div class="center-content d-flex flex-wrap d-flex justify-content-center" style="width:90%;margin:0px auto;padding-top:50px;">
             <div class="announcement-form" style="margin-top:40px;text-align:center;">
                 <form class="" action="./includes/announcementinc.php" method="post">
-                    <textarea name="ann" rows="10" cols="80" style="resize:none;background:none;border:2px solid black;padding:10px;"></textarea><br><br>
+                    <textarea name="ann" rows="10" cols="80" style="resize:none;background:none;border:none;border-radius:5px;padding:10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow: 3px 3px 10px 0px rgba(50, 50, 50, 0.6);"></textarea><br><br>
                     <input type="submit" name="" value="Submit" style="width:160px;height:50px;background:#2b2f49;border-radius:10px;border:none;color:white;">
                 </form>
             </div>

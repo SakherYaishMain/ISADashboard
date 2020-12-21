@@ -32,6 +32,10 @@ $hashrandompswd = md5($randompswd);
 
 //$ann = $_POST['note'];
 
+
+///////////Give clearance level depending on position///////////
+
+
 if($position == "member"){
     $clearance = 1;
 }
@@ -56,39 +60,99 @@ elseif ($position == "advisor"){
 
 $club = $_SESSION['currentclub'].".";
 
-$sql = "INSERT INTO users (username, password, addedby, position, pfp, clearance, email, clubs)  VALUES (?, ?, ?, ?, ?, ? , ?, ?);";
-$stmt = mysqli_stmt_init($link);
-if(!mysqli_stmt_prepare($stmt, $sql)){
+
+
+
+$yesclub2 = "%".$_SESSION['currentclub']."%";
+$sql0 = "SELECT * FROM users INNER JOIN clearance ON users.userID = clearance.userID WHERE users.clubs LIKE ? AND clearance.club = ? AND users.email =?";
+$stmt0 = mysqli_stmt_init($link);
+if(!mysqli_stmt_prepare($stmt0, $sql0)){
     echo "SQL Error";
 }else{
-    mysqli_stmt_bind_param($stmt, "sssssiss", $membername, $hashrandompswd, $email, $position, $pfp, $clearance, $memberemail, $club);
-    mysqli_stmt_execute($stmt);
-
-    $result = mysqli_stmt_get_result($stmt);
-    //header("location:../home.php");
+mysqli_stmt_bind_param($stmt0, "sss", $yesclub2, $_SESSION['currentclub'], $memberemail);
+mysqli_stmt_execute($stmt0);
+$result0 = mysqli_stmt_get_result($stmt0);
+$row0 = mysqli_fetch_assoc($result0);
+if (mysqli_num_rows($result0) == 1) {
+    header("location:../executive.php?error=alreadyadded");
+    echo "YES HAHA";
+    exit;
 }
 
-$sql2 = "SELECT userID from users WHERE email = ? and username = ?";
-$stmt2 = mysqli_stmt_init($link);
-if(!mysqli_stmt_prepare($stmt2, $sql2)){
-    echo "SQL Error";
+$sqlcheck = "SELECT * FROM users WHERE email = ?";
+$stmtcheck = mysqli_stmt_init($link);
+if(!mysqli_stmt_prepare($stmtcheck, $sqlcheck)){
+        echo "SQL Error";
 }else{
-    mysqli_stmt_bind_param($stmt2, "ss", $memberemail, $membername);
-    mysqli_stmt_execute($stmt2);
-    $result = mysqli_stmt_get_result($stmt2);
-    while($row = mysqli_fetch_array($result)){
-        $useridinsert = $row['userID'];
+        mysqli_stmt_bind_param($stmtcheck, "s", $memberemail);
+        mysqli_stmt_execute($stmtcheck);
+        $resultcheck = mysqli_stmt_get_result($stmtcheck);
+    $rowcheck = mysqli_fetch_assoc($resultcheck);
+    if (mysqli_num_rows($resultcheck) == 1) {
+        $updatedclub = $rowcheck['clubs'].$_SESSION['currentclub'].".";
+        $sqlupdate = "UPDATE users SET clubs = ? WHERE email = ?";
+        $stmtupdate = mysqli_stmt_init($link);
+        if(!mysqli_stmt_prepare($stmtupdate, $sqlupdate)){
+            echo "SQL Error";
+        }else{
+            mysqli_stmt_bind_param($stmtupdate, "ss", $updatedclub, $memberemail);
+            mysqli_stmt_execute($stmtupdate);
+        }
+        $sql3 = "INSERT INTO clearance (userID, level, club) VALUES (?,?, ?)";
+        $stmt3 = mysqli_stmt_init($link);
+        if(!mysqli_stmt_prepare($stmt3, $sql3)){
+            echo "SQL Error";
+        }else{
+            mysqli_stmt_bind_param($stmt3, "iis", $rowcheck['userID'], $clearance, $_SESSION['currentclub']);
+            mysqli_stmt_execute($stmt3);
+        }
+    }else{
+        $sql = "INSERT INTO users (username, password, addedby, position, pfp, clearance, email, clubs)  VALUES (?, ?, ?, ?, ?, ? , ?, ?);";
+        $stmt = mysqli_stmt_init($link);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            echo "SQL Error";
+        }else{
+            mysqli_stmt_bind_param($stmt, "sssssiss", $membername, $hashrandompswd, $email, $position, $pfp, $clearance, $memberemail, $club);
+            mysqli_stmt_execute($stmt);
+
+            $result = mysqli_stmt_get_result($stmt);
+            //header("location:../home.php");
+        }
+
+        $sql2 = "SELECT userID from users WHERE email = ? and username = ?";
+        $stmt2 = mysqli_stmt_init($link);
+        if(!mysqli_stmt_prepare($stmt2, $sql2)){
+            echo "SQL Error";
+        }else{
+            mysqli_stmt_bind_param($stmt2, "ss", $memberemail, $membername);
+            mysqli_stmt_execute($stmt2);
+            $result = mysqli_stmt_get_result($stmt2);
+            while($row = mysqli_fetch_array($result)){
+                $useridinsert = $row['userID'];
+            }
+        }
+
+        $sql3 = "INSERT INTO clearance (userID, level, club) VALUES (?,?, ?)";
+        $stmt3 = mysqli_stmt_init($link);
+        if(!mysqli_stmt_prepare($stmt3, $sql3)){
+            echo "SQL Error";
+        }else{
+            mysqli_stmt_bind_param($stmt3, "iis", $useridinsert, $clearance, $_SESSION['currentclub']);
+            mysqli_stmt_execute($stmt3);
+        }
     }
+
+
+
+
 }
 
-$sql3 = "INSERT INTO clearance (userID, level, club) VALUES (?,?, ?)";
-$stmt3 = mysqli_stmt_init($link);
-if(!mysqli_stmt_prepare($stmt3, $sql3)){
-    echo "SQL Error";
-}else{
-    mysqli_stmt_bind_param($stmt3, "iis", $useridinsert, $clearance, $_SESSION['currentclub']);
-    mysqli_stmt_execute($stmt3);
 }
+
+
+
+
+
 ////////////////////////SEND EMAIL/////////////////////
 
 //require_once "sendemailinc.php";

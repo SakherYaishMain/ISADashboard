@@ -85,10 +85,10 @@ if($_SESSION['clearance']<3){
                 <div class="financeinsert d-flex justify-content-center" style="width:100%;">
                     <div style="width: 100%;text-align:center;">
 
-                            <form class="" action="./includes/financeremoveinc.php" method="post">
+                            <form class="" action="./includes/deleteuser.php" method="post">
                             <i class="fas fa-at" style="position: absolute;font-size:30px;line-height:40px;margin-left:5px;"></i>
-                            <input type="text" name="amount" style="width:90%;height:40px;border-radius:5px;background:white;border:1px solid grey;padding:0px 45px;font-size:20px;font-weight: bold;" required/>
-                                <select placeholder="yes" id="cars" style="margin-top:20px;width:90%;height:40px;border-radius:5px;background:white;border:1px solid grey;padding:0px 15px;font-size:20px;font-weight: bold;">
+                            <input type="text" name="email" style="width:90%;height:40px;border-radius:5px;background:white;border:1px solid grey;padding:0px 45px;font-size:20px;font-weight: bold;" placeholder="Email" required/>
+                                <select placeholder="yes" name="name" style="margin-top:20px;width:90%;height:40px;border-radius:5px;background:white;border:1px solid grey;padding:0px 15px;font-size:20px;font-weight: bold;">
                                     <?php
                                     //SELECT * FROM users INNER JOIN clearance ON users.userID = clearance.userID WHERE users.clubs LIKE "%ISA%" AND clearance.club ="ISA"
                                     $yesclub2 = "%".$_SESSION['currentclub']."%";

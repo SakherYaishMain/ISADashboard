@@ -17,21 +17,64 @@ $email = $_SESSION['email'];
 $membername = $_POST['name'];
 $memberemail = $_POST['email'];
 
-
+$reason = $_POST['reason'];
 
 
 
 $club = $_SESSION['currentclub'].".";
+$yesclub = "%".$_SESSION['currentclub']."%";
 
-$sql = "DELETE FROM users WHERE email = ? and username = ?";
+$sqlinsert = "INSERT INTO deletelogs (useremail, deletedby, reason) VALUES (?, ?, ?)";
+$stmtinsert = mysqli_stmt_init($link);
+if (!mysqli_stmt_prepare($stmtinsert, $sqlinsert)) {
+    echo "SQL Error";
+} else {
+    mysqli_stmt_bind_param($stmtinsert, "sss", $memberemail, $email, $reason);
+    mysqli_stmt_execute($stmtinsert);
+
+}
+
+
+$sql = "SELECT * FROM users INNER JOIN clearance ON users.userID = clearance.userID WHERE users.clubs LIKE ? AND clearance.club = ? AND users.email =?";
 $stmt = mysqli_stmt_init($link);
 if(!mysqli_stmt_prepare($stmt, $sql)){
     echo "SQL Error";
-}else{
-    mysqli_stmt_bind_param($stmt, "ss", $memberemail, $membername);
+}else {
+    mysqli_stmt_bind_param($stmt, "sss", $yesclub, $_SESSION['currentclub'], $memberemail);
     mysqli_stmt_execute($stmt);
-    //header("location:../home.php");
+    $result = mysqli_stmt_get_result($stmt);
+    while($row = mysqli_fetch_array($result)){
+        $useridselect = $row['userID'];
+        $updatedclubs = "";
+        $clubs = explode(".", $row['clubs']);
+        echo $row['clubs'];
+    }
+
+
+    if (mysqli_num_rows($result) == 1) {
+
+        foreach ($clubs as $field) {
+            if ($field == $_SESSION['currentclub']) {
+
+            } elseif ($field != "") {
+                $updatedclubs = $updatedclubs . $field . ".";
+            }
+        }
+        $sqlupdate = "UPDATE users SET clubs = ? WHERE email = ?";
+        $stmtupdate = mysqli_stmt_init($link);
+        if (!mysqli_stmt_prepare($stmtupdate, $sqlupdate)) {
+            echo "SQL Error";
+        } else {
+            mysqli_stmt_bind_param($stmtupdate, "ss", $updatedclubs, $memberemail);
+            mysqli_stmt_execute($stmtupdate);
+
+        }
+
+    }
+    header("location:../executive.php");
+
 }
+
 
 //////////////DISCORD WEBHOOK API////////////////
 /*$webhookurl = "https://discord.com/api/webhooks/787425123912253461/DRKBYozKX66gAaCDOWyeUGojp28TwOucmjr9UuD3oGy-w8PzBcCo8lnieFB_J5zfDxkt";
