@@ -33,7 +33,7 @@ if($_SESSION['clearance']<2 or $_SESSION['clearance'] === "2T" or $_SESSION['cle
 <body style="background:#fafcfe;">
 <style>
     footer{
-        margin-top:15%;
+        margin-top:14%;
     }
 </style>
 <div class="content d-flex">
