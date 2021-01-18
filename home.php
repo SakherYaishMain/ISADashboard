@@ -181,60 +181,30 @@ date_default_timezone_set("Asia/Riyadh");
             editable: false,
             dayMaxEvents: true, // allow "more" link when too many events
             events: [
-                {
-                    title: 'international week',
-                    start: '2020-11-19'
-                },
-                {
-                    title: 'Thanksgiving Break',
-                    start: '2020-11-26',
-                    end: '2020-11-31'
-                },
-                {
-                    groupId: 999,
-                    title: 'Repeating Event',
-                    start: '2020-09-09T16:00:00'
-                },
-                {
-                    groupId: 999,
-                    title: 'Repeating Event',
-                    start: '2020-09-16T16:00:00'
-                },
-                {
-                    title: 'Conference',
-                    start: '2020-09-11',
-                    end: '2020-09-13'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2020-09-12T10:30:00',
-                    end: '2020-09-12T12:30:00'
-                },
-                {
-                    title: 'Lunch',
-                    start: '2020-09-12T12:00:00'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2020-09-12T14:30:00'
-                },
-                {
-                    title: 'Happy Hour',
-                    start: '2020-09-12T17:30:00'
-                },
-                {
-                    title: 'Dinner',
-                    start: '2020-09-12T20:00:00'
-                },
-                {
-                    title: 'Birthday Party',
-                    start: '2020-09-13T07:00:00'
-                },
-                {
-                    title: 'Click for Google',
-                    url: 'http://google.com/',
-                    start: '2020-09-28'
-                }
+                <?php
+                    $sql = "SELECT * FROM events WHERE club = ? AND eventType = ? OR eventType = ? ORDER BY dateStart DESC;";
+                    $stmt = mysqli_stmt_init($link);
+                    $regular = "regular";
+                    $all = "admin";
+                    
+
+                    if(!mysqli_stmt_prepare($stmt, $sql)){
+                        echo "SQL Statement Failed";
+                    }else{
+                        mysqli_stmt_bind_param($stmt, "sss", $_SESSION['currentclub'], $regular, $all);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+
+                        while($row = mysqli_fetch_array($result)){
+                            echo "{
+                                title:'".$row['eventName']."',
+                                start:'".$row['dateStart']."',
+                                end:'".$row['dateEnd']."'
+                            },";
+                        }    
+                    }
+                ?>
+                
             ]
         });
 

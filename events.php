@@ -35,6 +35,12 @@ if($_SESSION['clearance']<2 or $_SESSION['clearance'] === "2T" or $_SESSION['cle
     footer{
         margin-top:14%;
     }
+    #editor form{
+        margin-left:30px;
+    }
+    #editor input{
+        width:90%;
+    }
 </style>
 <div class="content d-flex">
     <?php require"nav.php";?>
@@ -51,7 +57,15 @@ if($_SESSION['clearance']<2 or $_SESSION['clearance'] === "2T" or $_SESSION['cle
             <?php
             if($_SESSION['clearance'] > 2){
                 echo '<div id="editor" STYLE="display:none;padding-top:5px;height:300px;padding-right:10px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow:    3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.6);margin:0px auto;">
-                <div id="eventadd">ADD EVENT</div>
+                <form method="POST" action="./includes/addeventinc.php">
+                <label for="eventname">Event Name</label><br>
+                <input type="text" name="eventname" placeholder="Event Name"><br><br>
+                <label for="eventstartdate">Event Start Date</label><br>
+                <input type="date" name="eventstartdate"><br><br>
+                <label for="eventenddate">Event End Date</label><br>
+                <input type="date" name="eventenddate"><br><br>
+                <input type="submit" value="Submit">
+                </form>
             </div>';
             }
             ?>
@@ -71,22 +85,23 @@ if($_SESSION['clearance']<2 or $_SESSION['clearance'] === "2T" or $_SESSION['cle
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Agenda</th>
-                        <th scope="col">Submitted By</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Date Start</th>
+                        <th scope="col">Date End</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $sql = "SELECT * FROM agenda WHERE club = ? ORDER BY entryID DESC;";
+                    $sql = "SELECT * FROM events WHERE club = ? AND eventType = ? OR eventType = ? ORDER BY dateStart DESC;";
                     $stmt = mysqli_stmt_init($link);
-                    
+                    $regular = "regular";
+                    $all = "admin";
                     
 
                     if(!mysqli_stmt_prepare($stmt, $sql)){
                         echo "SQL Statement Failed";
                     }else{
-                        mysqli_stmt_bind_param($stmt, "s", $_SESSION['currentclub']);
+                        mysqli_stmt_bind_param($stmt, "sss", $_SESSION['currentclub'], $regular, $all);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);
 
@@ -94,10 +109,10 @@ if($_SESSION['clearance']<2 or $_SESSION['clearance'] === "2T" or $_SESSION['cle
                             
                             echo "
                                <tr>
-                                    <th scope='row'>".htmlspecialchars($row['entryID'])."</th>
-                                    <td>".htmlspecialchars($row['datetimeval'])."</td>
-                                    <td>".$row['message']."</td>
-                                    <td>".htmlspecialchars($row['Submittedby'])."</td>
+                                    <th scope='row'>".htmlspecialchars($row['eventID'])."</th>
+                                    <td>".htmlspecialchars($row['eventName'])."</td>
+                                    <td>".$row['dateStart']."</td>
+                                    <td>".htmlspecialchars($row['dateEnd'])."</td>
                                 </tr>
                             ";
 
