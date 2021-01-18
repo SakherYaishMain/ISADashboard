@@ -42,6 +42,7 @@ $currentpage = $_SESSION['currentpage'];
         ?>
 
         <a href="files.php"><li class="dashlink" data-currentpage="files"><i class="far fa-file-archive" style="margin-right:20px;"></i>Files</li></a>
+        <a href="events.php"><li class="dashlink" data-currentpage="events"><i class="far fa-calendar-plus" style="margin-right:20px;"></i>Events</li></a>
     </ul>
 
 

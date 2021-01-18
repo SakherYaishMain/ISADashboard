@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params('o', '/', 'localhost/ISAdashboard', isset($_SERVER["HTTPS"]), true);
+ 
 require_once"./connections/connect.php";
 session_start();
 ?>

@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params('o', '/', 'https://isadashboard.000webhostapp.com/', isset($_SERVER["HTTPS"]), true);
+ 
 require_once "./connections/connect.php";
 session_start();
 
@@ -35,7 +35,7 @@ if (isset($_GET['logout'])) {
         height:0px !important;
     }
 </style>
-<div class="content d-flex justify-content-center align-items-center content-login" style="height:calc(100vh - 30px);">
+<div class="content d-flex justify-content-center align-items-center content-login chooseclubcontent" style="height:calc(100vh - 30px);">
     <div class="chooseclub d-flex justify-content-around flex-wrap" style="-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow: 3px 3px 10px 0px rgba(50, 50, 50, 0.6);width:1200px;height:600px;background:white;padding:20px;align-items:center;overflow-y:auto;">
 
         <?php
@@ -52,7 +52,7 @@ if (isset($_GET['logout'])) {
                 while($row = mysqli_fetch_array($result)){
                     echo '<a href="./includes/setclubstatus.php?code='.$row['clubhash'].'" style="color:black;">
                 <div class="clubcard" style="height:300px;width:200px;-webkit-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);-moz-box-shadow: 3px 1px 10px 0px rgba(50, 50, 50, 0.6);box-shadow: 3px 3px 10px 0px rgba(50, 50, 50, 0.6);">
-                <h2 style="text-align:center;margin-top:10px;">'.$row['clubname'].'</h2>
+                <h2 style="text-align:center;margin-top:10px;word-break: break-all;">'.$row['clubname'].'</h2>
                 <img src="'.$row['clubimg'].'" style="margin-top:10px;width:150px;height:150px;margin-left:25px;">
         </div></a>
             ';

@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params('o', '/', 'localhost/ISAdashboard', isset($_SERVER["HTTPS"]), true);
+ 
 session_start();
 require_once'../connections/connect.php';
 
@@ -12,8 +12,31 @@ $datetime = $date . ' ' . $time;
 
 $memberid = $_REQUEST['id'];
 
+$position = $_POST['positioninput'];
 
-$level = round($_POST['level']);
+if($position === "advisor"){
+    $level = "5";
+}
+if($position === "president"){
+    $level = "4";
+}
+if($position === "vice"){
+    $level = "3";
+}
+if($position === "treasurary"){
+    $level = "2T";
+}
+if($position === "secretary"){
+    $level = "2S";
+}
+if($position === "social"){
+    $level = "2SM";
+}
+if($position === "member"){
+    $level = "1";
+}
+
+
 
 if($level >5){
     $level =5;
@@ -27,7 +50,7 @@ $stmt = mysqli_stmt_init($link);
 if(!mysqli_stmt_prepare($stmt, $sql)){
     echo "SQL Error";
 }else{
-    mysqli_stmt_bind_param($stmt, "iis", $level, $memberid, $_SESSION['currentclub']);
+    mysqli_stmt_bind_param($stmt, "sis", $level, $memberid, $_SESSION['currentclub']);
     mysqli_stmt_execute($stmt);
 
     $result = mysqli_stmt_get_result($stmt);

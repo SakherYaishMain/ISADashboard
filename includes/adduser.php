@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params('o', '/', 'localhost/ISAdashboard', isset($_SERVER["HTTPS"]), true);
+ 
 session_start();
 require_once'../connections/connect.php';
 
@@ -155,7 +155,7 @@ if(!mysqli_stmt_prepare($stmtcheck, $sqlcheck)){
 
 ////////////////////////SEND EMAIL/////////////////////
 
-//require_once "sendemailinc.php";
+require_once "sendemailinc.php";
 
 
 
